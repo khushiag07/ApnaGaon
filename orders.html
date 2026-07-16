@@ -1,0 +1,1016 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Orders - Apna Gaon</title>
+  <meta name="description" content="Manage, track and reorder your fresh farm orders from Apna Gaon.">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    /* --- LAYOUT GRID --- */
+    .dashboard-layout {
+      display: grid;
+      grid-template-columns: 260px 1fr 300px;
+      gap: 24px;
+      padding: 30px 0 64px 0;
+      align-items: start;
+    }
+
+    /* --- LEFT SIDEBAR USER PROFILE --- */
+    .user-sidebar {
+      background-color: white;
+      border: 1px solid var(--border-color);
+      border-radius: var(--border-radius-lg);
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .profile-card {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 20px;
+    }
+    .profile-avatar {
+      width: 54px;
+      height: 54px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid var(--primary-green);
+    }
+    .profile-info h3 {
+      font-size: 1.05rem;
+      margin-bottom: 2px;
+    }
+    .profile-info p {
+      font-size: 0.75rem;
+      color: var(--text-light);
+      margin-bottom: 6px;
+    }
+    .profile-badge {
+      display: inline-block;
+      font-size: 0.65rem;
+      font-weight: 700;
+      color: var(--primary-green);
+      background-color: var(--bg-sage-light);
+      padding: 2px 8px;
+      border-radius: 10px;
+    }
+    .sidebar-menu {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .menu-item a {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 14px;
+      border-radius: var(--border-radius-sm);
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      transition: var(--transition-smooth);
+    }
+    .menu-item a:hover {
+      background-color: var(--bg-sage);
+      color: var(--primary-green);
+    }
+    .menu-item.active a {
+      background-color: var(--bg-sage-light);
+      color: var(--primary-green);
+    }
+    .menu-icon-label {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .menu-icon {
+      font-size: 1.1rem;
+    }
+    .menu-meta {
+      font-size: 0.75rem;
+      padding: 2px 6px;
+      border-radius: 10px;
+      background-color: var(--border-color);
+      color: var(--text-dark);
+      font-weight: 700;
+    }
+    .menu-meta.badge-green {
+      background-color: var(--primary-green);
+      color: white;
+    }
+    .sidebar-banner {
+      background-color: var(--bg-sage);
+      border: 1px solid var(--border-color);
+      border-radius: var(--border-radius-md);
+      padding: 16px;
+      text-align: center;
+    }
+    .sidebar-banner h4 {
+      font-size: 0.9rem;
+      margin-bottom: 6px;
+    }
+    .sidebar-banner p {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+    }
+    .btn-sidebar-cta {
+      display: block;
+      width: 100%;
+      background-color: white;
+      color: var(--primary-green);
+      border: 1px solid var(--primary-green);
+      padding: 8px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-align: center;
+    }
+    .btn-sidebar-cta:hover {
+      background-color: var(--primary-green);
+      color: white;
+    }
+
+    /* --- CENTER MY ORDERS AREA --- */
+    .orders-area {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .orders-header {
+      margin-bottom: 10px;
+    }
+    .orders-header h1 {
+      font-size: 1.8rem;
+      margin-bottom: 4px;
+    }
+    .orders-header p {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+    .orders-tabs-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 4px;
+    }
+    .orders-tabs {
+      display: flex;
+      gap: 16px;
+    }
+    .order-tab {
+      padding: 8px 12px 12px 12px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      position: relative;
+      cursor: pointer;
+    }
+    .order-tab.active {
+      color: var(--primary-green);
+    }
+    .order-tab.active::after {
+      content: '';
+      position: absolute;
+      bottom: -1px;
+      left: 0;
+      width: 100%;
+      height: 2.5px;
+      background-color: var(--primary-green);
+    }
+    .orders-sort-select {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      border: none;
+      background: none;
+      cursor: pointer;
+    }
+    .order-card {
+      background-color: white;
+      border: 1px solid var(--border-color);
+      border-radius: var(--border-radius-md);
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      transition: var(--transition-smooth);
+    }
+    .order-card:hover {
+      box-shadow: var(--shadow-sm);
+    }
+    .order-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px dashed var(--border-color);
+      padding-bottom: 14px;
+    }
+    .order-card-meta {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .order-farm-thumb {
+      width: 50px;
+      height: 50px;
+      border-radius: var(--border-radius-sm);
+      object-fit: cover;
+    }
+    .order-meta-info h4 {
+      font-size: 0.95rem;
+      margin-bottom: 2px;
+    }
+    .order-meta-info p {
+      font-size: 0.75rem;
+      color: var(--text-light);
+    }
+    .order-card-details {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    .order-summary-metrics {
+      display: flex;
+      gap: 24px;
+    }
+    .metric-item {
+      display: flex;
+      flex-direction: column;
+    }
+    .metric-label {
+      font-size: 0.75rem;
+      color: var(--text-light);
+      margin-bottom: 2px;
+    }
+    .metric-val {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--text-dark);
+    }
+    .order-status-badge {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 6px 12px;
+      border-radius: 20px;
+    }
+    .status-delivered { background-color: #e8f5e9; color: #2e7d32; }
+    .status-shipping { background-color: #fff3e0; color: #e65100; }
+    .status-cancelled { background-color: #ffebee; color: #c62828; }
+    .order-actions {
+      display: flex;
+      gap: 10px;
+    }
+    .btn-order-action {
+      font-size: 0.8rem;
+      font-weight: 700;
+      padding: 8px 16px;
+      border-radius: 20px;
+    }
+    .btn-order-grey {
+      background-color: var(--bg-sage);
+      color: var(--text-muted);
+      border: 1px solid var(--border-color);
+    }
+    .btn-order-grey:hover {
+      background-color: var(--border-color);
+      color: var(--text-dark);
+    }
+    .btn-order-green {
+      background-color: var(--primary-green);
+      color: white;
+    }
+    .btn-order-green:hover {
+      background-color: var(--primary-hover);
+    }
+    .btn-load-more {
+      align-self: center;
+      background-color: white;
+      color: var(--primary-green);
+      border: 1.5px solid var(--primary-green);
+      padding: 10px 24px;
+      border-radius: 30px;
+      font-weight: 700;
+      font-size: 0.85rem;
+      margin-top: 10px;
+    }
+    .btn-load-more:hover {
+      background-color: var(--primary-green);
+      color: white;
+    }
+
+    /* --- RIGHT SUMMARY SIDEBAR --- */
+    .summary-sidebar {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+    .summary-card {
+      background-color: white;
+      border: 1px solid var(--border-color);
+      border-radius: var(--border-radius-lg);
+      padding: 24px;
+    }
+    .summary-card h3 {
+      font-size: 1.1rem;
+      margin-bottom: 20px;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 12px;
+    }
+    .summary-row {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 14px;
+      font-size: 0.85rem;
+    }
+    .summary-row:last-child {
+      margin-bottom: 0;
+    }
+    .summary-row span:first-child {
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+    .summary-row span:last-child {
+      font-weight: 700;
+      color: var(--text-dark);
+    }
+    .summary-row.saved span:last-child {
+      color: var(--primary-green);
+    }
+    .actions-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .action-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      cursor: pointer;
+      padding: 4px 0;
+      transition: var(--transition-smooth);
+    }
+    .action-row:hover {
+      color: var(--primary-green);
+      padding-left: 2px;
+    }
+    .action-label-box {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .action-icon {
+      font-size: 1.1rem;
+    }
+    .recommends-list {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .recommend-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .recommend-thumb {
+      width: 50px;
+      height: 50px;
+      border-radius: var(--border-radius-sm);
+      object-fit: cover;
+    }
+    .recommend-info {
+      flex: 1;
+    }
+    .recommend-name {
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 2px;
+    }
+    .recommend-price {
+      font-size: 0.8rem;
+      font-weight: 700;
+    }
+    .recommend-price span {
+      font-weight: 400;
+      color: var(--text-light);
+    }
+
+    @media (max-width: 1200px) {
+      .dashboard-layout {
+        grid-template-columns: 240px 1fr;
+      }
+      .summary-sidebar {
+        grid-column: span 2;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+      }
+      .summary-sidebar > div:last-child {
+        grid-column: span 2;
+      }
+    }
+    @media (max-width: 992px) {
+      .dashboard-layout {
+        grid-template-columns: 1fr;
+      }
+      .user-sidebar {
+        margin-bottom: 20px;
+      }
+      .summary-sidebar {
+        grid-column: span 1;
+        grid-template-columns: 1fr;
+      }
+      .summary-sidebar > div:last-child {
+        grid-column: span 1;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <div class="container header-container">
+      <a href="index.html" class="logo">
+        <svg viewBox="0 0 24 24">
+          <path d="M12 2C6.48 2 2 6.48 2 12c0 4.42 3.58 8 8 8v-2c-3.31 0-6-2.69-6-6 0-2.97 2.16-5.44 5-5.91V8h2v-.09c2.84.47 5 2.94 5 5.91 0 3.31-2.69 6-6 6v2c4.42 0 8-3.58 8-8 0-5.52-4.48-10-10-10z"/>
+          <path d="M12 6c-3.31 0-6 2.69-6 6 0 1.66.67 3.16 1.76 4.24l1.42-1.42C8.43 14.07 8 13.09 8 12c0-2.21 1.79-4 4-4s4 1.79 4 4c0 1.09-.43 2.07-1.18 2.83l1.42 1.42C17.33 15.16 18 13.66 18 12c0-3.31-2.69-6-6-6z"/>
+        </svg>
+        <span>Apna Gaon</span>
+      </a>
+
+      <nav>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="categories.html">Farms</a></li>
+          <li><a href="categories.html">Categories</a></li>
+          <li><a href="categories.html">Offers</a></li>
+          <li><a href="orders.html" class="active">Orders</a></li>
+          <li><a href="about.html">About Us</a></li>
+        </ul>
+      </nav>
+
+      <div class="header-controls">
+        <div class="location-selector">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+            <circle cx="12" cy="10" r="3"></circle>
+          </svg>
+          <span class="loc-text">Jaipur, Rajasthan</span>
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <polyline points="6 9 12 15 18 9"></polyline>
+          </svg>
+        </div>
+
+        <div class="search-bar-container">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+          <input type="text" placeholder="Search fresh vegetables, milk...">
+        </div>
+
+        <button class="cart-btn" onclick="window.location.href='orders.html'">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <circle cx="9" cy="21" r="1"></circle>
+            <circle cx="20" cy="21" r="1"></circle>
+            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+          </svg>
+          <span class="cart-count">3</span>
+        </button>
+
+        <div id="header-auth-container">
+          <a href="login.html" class="auth-btn">Login / Sign Up</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- DASHBOARD CONTENT -->
+  <div class="container dashboard-layout">
+    <!-- LEFT COLUMN - USER SIDEBAR -->
+    <aside class="user-sidebar">
+      <div class="profile-card">
+        <img class="profile-avatar" id="sidebar-avatar" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&h=150&fit=crop" alt="Anjali Mehta">
+        <div class="profile-info">
+          <h3 id="sidebar-name">Anjali Mehta</h3>
+          <p id="sidebar-email">anjali@email.com</p>
+          <span class="profile-badge">Loyal Customer</span>
+        </div>
+      </div>
+
+      <ul class="sidebar-menu">
+        <li class="menu-item"><a href="#"><span class="menu-icon-label"><span class="menu-icon">📊</span> Dashboard</span></a></li>
+        <li class="menu-item active"><a href="#"><span class="menu-icon-label"><span class="menu-icon">🛍️</span> My Orders</span></a></li>
+        <li class="menu-item"><a href="#"><span class="menu-icon-label"><span class="menu-icon">❤️</span> Wishlist</span> <span class="menu-meta">12</span></a></li>
+        <li class="menu-item"><a href="#"><span class="menu-icon-label"><span class="menu-icon">📍</span> Addresses</span></a></li>
+        <li class="menu-item"><a href="#"><span class="menu-icon-label"><span class="menu-icon">💳</span> Wallet</span> <span class="menu-meta badge-green">₹750</span></a></li>
+        <li class="menu-item"><a href="#"><span class="menu-icon-label"><span class="menu-icon">⭐</span> Rewards</span> <span class="menu-meta">120 pts</span></a></li>
+        <li class="menu-item"><a href="#"><span class="menu-icon-label"><span class="menu-icon">🎟️</span> Coupons</span></a></li>
+        <li class="menu-item"><a href="#"><span class="menu-icon-label"><span class="menu-icon">🔄</span> Subscriptions</span></a></li>
+        <li class="menu-item"><a href="#"><span class="menu-icon-label"><span class="menu-icon">🔔</span> Notifications</span> <span class="menu-meta badge-green">3</span></a></li>
+        <li class="menu-item"><a href="#"><span class="menu-icon-label"><span class="menu-icon">⚙️</span> Profile Settings</span></a></li>
+        <li class="menu-item"><a href="#"><span class="menu-icon-label"><span class="menu-icon">❓</span> Help & Support</span></a></li>
+        <li class="menu-item" style="border-top: 1px solid var(--border-color); margin-top: 10px; padding-top: 6px;">
+          <a href="#" onclick="logoutUser()" style="color: #c62828;"><span class="menu-icon-label"><span class="menu-icon">🚪</span> Logout</span></a>
+        </li>
+      </ul>
+
+      <div class="sidebar-banner">
+        <h4>Need Help?</h4>
+        <p>We are here for you 24/7 to solve delivery or farm queries.</p>
+        <button class="btn-sidebar-cta" onclick="showToast('Connecting to support chat...', 'info')">Contact Support</button>
+      </div>
+
+      <div class="sidebar-banner" style="background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%);">
+        <h4 style="color: #e65100;">Get 10% OFF</h4>
+        <p>on your next order from verified farmers.</p>
+        <div style="font-weight: 700; color: #e65100; margin-bottom: 10px; font-size: 0.85rem;">Use Code: SAVE10</div>
+        <button class="btn-sidebar-cta" onclick="window.location.href='categories.html'" style="border-color: #e65100; color: #e65100;">Order Now</button>
+      </div>
+    </aside>
+
+    <!-- CENTER COLUMN - MY ORDERS AREA -->
+    <main class="orders-area">
+      <div class="orders-header">
+        <h1>My Orders</h1>
+        <p>Track, manage and reorder your farm fresh products</p>
+      </div>
+
+      <div class="orders-tabs-bar">
+        <div class="orders-tabs">
+          <div class="order-tab active" onclick="filterOrders('all', this)">All Orders</div>
+          <div class="order-tab" onclick="filterOrders('active', this)">Active</div>
+          <div class="order-tab" onclick="filterOrders('delivered', this)">Delivered</div>
+          <div class="order-tab" onclick="filterOrders('cancelled', this)">Cancelled</div>
+          <div class="order-tab" onclick="filterOrders('scheduled', this)">Scheduled</div>
+        </div>
+        <select class="orders-sort-select" onchange="sortOrders(this.value)">
+          <option value="newest">Sort by: Newest</option>
+          <option value="oldest">Sort by: Oldest</option>
+        </select>
+      </div>
+
+      <!-- Orders List Container -->
+      <div class="flex flex-direction-column gap-3" id="orders-list-container">
+        <!-- Order 1 -->
+        <div class="order-card" data-status="delivered" data-date="2024-05-15">
+          <div class="order-card-header">
+            <div class="order-card-meta">
+              <img class="order-farm-thumb" src="https://images.unsplash.com/photo-1500937386664-56d1dfef3854?w=100" alt="Green Valley Farm">
+              <div class="order-meta-info">
+                <h4>Order #AG123456</h4>
+                <p>15 May, 2024 &bull; 10:30 AM</p>
+              </div>
+            </div>
+            <div class="order-status-badge status-delivered">
+              <span style="font-size: 0.6rem;">✔</span> Delivered
+            </div>
+          </div>
+          <div class="order-card-details">
+            <div class="order-summary-metrics">
+              <div class="metric-item">
+                <span class="metric-label">Source</span>
+                <span class="metric-val">Green Valley Farm</span>
+              </div>
+              <div class="metric-item">
+                <span class="metric-label">Total Amount</span>
+                <span class="metric-val">₹525</span>
+              </div>
+              <div class="metric-item">
+                <span class="metric-label">Items</span>
+                <span class="metric-val">5 Items</span>
+              </div>
+            </div>
+            <div class="order-actions">
+              <button class="btn-order-action btn-order-grey" onclick="showOrderDetails('AG123456')">View Details</button>
+              <button class="btn-order-action btn-order-green" onclick="reorder('AG123456')">Reorder</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Order 2 -->
+        <div class="order-card" data-status="active" data-date="2024-05-14">
+          <div class="order-card-header">
+            <div class="order-card-meta">
+              <img class="order-farm-thumb" src="https://images.unsplash.com/photo-1592417817098-8f3d6eb19675?w=100" alt="Kisan Kanha Farm">
+              <div class="order-meta-info">
+                <h4>Order #AG123455</h4>
+                <p>14 May, 2024 &bull; 08:45 AM</p>
+              </div>
+            </div>
+            <div class="order-status-badge status-shipping">
+              <span style="font-size: 0.6rem;">🚚</span> Out for Delivery
+            </div>
+          </div>
+          <div class="order-card-details">
+            <div class="order-summary-metrics">
+              <div class="metric-item">
+                <span class="metric-label">Source</span>
+                <span class="metric-val">Kisan Kanha Farm</span>
+              </div>
+              <div class="metric-item">
+                <span class="metric-label">Total Amount</span>
+                <span class="metric-val">₹310</span>
+              </div>
+              <div class="metric-item">
+                <span class="metric-label">Items</span>
+                <span class="metric-val">4 Items</span>
+              </div>
+            </div>
+            <div class="order-actions">
+              <button class="btn-order-action btn-order-grey" onclick="showOrderDetails('AG123455')">View Details</button>
+              <button class="btn-order-action btn-order-green" onclick="trackOrder('AG123455')">Track Order</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Order 3 -->
+        <div class="order-card" data-status="delivered" data-date="2024-05-13">
+          <div class="order-card-header">
+            <div class="order-card-meta">
+              <img class="order-farm-thumb" src="https://images.unsplash.com/photo-1595974482597-4b8da8879bc5?w=100" alt="Sharma Organic Farm">
+              <div class="order-meta-info">
+                <h4>Order #AG123454</h4>
+                <p>13 May, 2024 &bull; 06:20 PM</p>
+              </div>
+            </div>
+            <div class="order-status-badge status-delivered">
+              <span style="font-size: 0.6rem;">✔</span> Delivered
+            </div>
+          </div>
+          <div class="order-card-details">
+            <div class="order-summary-metrics">
+              <div class="metric-item">
+                <span class="metric-label">Source</span>
+                <span class="metric-val">Sharma Organic Farm</span>
+              </div>
+              <div class="metric-item">
+                <span class="metric-label">Total Amount</span>
+                <span class="metric-val">₹785</span>
+              </div>
+              <div class="metric-item">
+                <span class="metric-label">Items</span>
+                <span class="metric-val">7 Items</span>
+              </div>
+            </div>
+            <div class="order-actions">
+              <button class="btn-order-action btn-order-grey" onclick="showOrderDetails('AG123454')">View Details</button>
+              <button class="btn-order-action btn-order-green" onclick="reorder('AG123454')">Reorder</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Order 4 -->
+        <div class="order-card" data-status="cancelled" data-date="2024-05-12">
+          <div class="order-card-header">
+            <div class="order-card-meta">
+              <img class="order-farm-thumb" src="https://images.unsplash.com/photo-1546445317-29f4545e6d49?w=100" alt="Verma Dairy Farm">
+              <div class="order-meta-info">
+                <h4>Order #AG123453</h4>
+                <p>12 May, 2024 &bull; 11:15 AM</p>
+              </div>
+            </div>
+            <div class="order-status-badge status-cancelled">
+              <span style="font-size: 0.6rem;">✖</span> Cancelled
+            </div>
+          </div>
+          <div class="order-card-details">
+            <div class="order-summary-metrics">
+              <div class="metric-item">
+                <span class="metric-label">Source</span>
+                <span class="metric-val">Verma Dairy Farm</span>
+              </div>
+              <div class="metric-item">
+                <span class="metric-label">Total Amount</span>
+                <span class="metric-val">₹245</span>
+              </div>
+              <div class="metric-item">
+                <span class="metric-label">Items</span>
+                <span class="metric-val">3 Items</span>
+              </div>
+            </div>
+            <div class="order-actions">
+              <button class="btn-order-action btn-order-grey" onclick="showOrderDetails('AG123453')">View Details</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Order 5 -->
+        <div class="order-card" data-status="delivered" data-date="2024-05-11">
+          <div class="order-card-header">
+            <div class="order-card-meta">
+              <img class="order-farm-thumb" src="https://images.unsplash.com/photo-1619546813926-a78fa6372cd2?w=100" alt="Rathore Fruit Farm">
+              <div class="order-meta-info">
+                <h4>Order #AG123452</h4>
+                <p>11 May, 2024 &bull; 09:50 AM</p>
+              </div>
+            </div>
+            <div class="order-status-badge status-delivered">
+              <span style="font-size: 0.6rem;">✔</span> Delivered
+            </div>
+          </div>
+          <div class="order-card-details">
+            <div class="order-summary-metrics">
+              <div class="metric-item">
+                <span class="metric-label">Source</span>
+                <span class="metric-val">Rathore Fruit Farm</span>
+              </div>
+              <div class="metric-item">
+                <span class="metric-label">Total Amount</span>
+                <span class="metric-val">₹640</span>
+              </div>
+              <div class="metric-item">
+                <span class="metric-label">Items</span>
+                <span class="metric-val">6 Items</span>
+              </div>
+            </div>
+            <div class="order-actions">
+              <button class="btn-order-action btn-order-grey" onclick="showOrderDetails('AG123452')">View Details</button>
+              <button class="btn-order-action btn-order-green" onclick="reorder('AG123452')">Reorder</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <button class="btn btn-load-more" onclick="showToast('All order history loaded.', 'info')">Load More Orders</button>
+    </main>
+
+    <!-- RIGHT COLUMN - SUMMARY & SUGGESTIONS -->
+    <aside class="summary-sidebar">
+      <!-- Order Summary Card -->
+      <div class="summary-card">
+        <h3>Order Summary</h3>
+        <div class="summary-row">
+          <span>Total Orders</span>
+          <span>24</span>
+        </div>
+        <div class="summary-row">
+          <span>Orders Delivered</span>
+          <span>20</span>
+        </div>
+        <div class="summary-row">
+          <span>Orders Cancelled</span>
+          <span>2</span>
+        </div>
+        <div class="summary-row">
+          <span>Total Spent</span>
+          <span>₹12,540</span>
+        </div>
+        <div class="summary-row saved">
+          <span>You Saved</span>
+          <span>₹1,250</span>
+        </div>
+      </div>
+
+      <!-- Quick Actions Card -->
+      <div class="summary-card">
+        <h3>Quick Actions</h3>
+        <div class="actions-list">
+          <div class="action-row" onclick="reorder('AG123456')">
+            <span class="action-label-box"><span class="action-icon">🔄</span> Reorder from last order</span>
+            <span>&rsaquo;</span>
+          </div>
+          <div class="action-row" onclick="window.location.href='index.html'">
+            <span class="action-label-box"><span class="action-icon">❤️</span> View Favourite Farms</span>
+            <span>&rsaquo;</span>
+          </div>
+          <div class="action-row" onclick="showToast('Downloading last invoice PDF...', 'success')">
+            <span class="action-label-box"><span class="action-icon">📄</span> Download Invoices</span>
+            <span>&rsaquo;</span>
+          </div>
+          <div class="action-row" onclick="showToast('Loading subscriptions console...', 'info')">
+            <span class="action-label-box"><span class="action-icon">🔄</span> Manage Subscriptions</span>
+            <span>&rsaquo;</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Recommendations Card -->
+      <div class="summary-card">
+        <div class="flex justify-between align-center" style="margin-bottom: 16px;">
+          <h3 style="margin-bottom: 0; border: none; padding: 0;">You May Also Like</h3>
+          <a href="categories.html" style="font-size: 0.8rem; font-weight: 700; color: var(--primary-green);">View All</a>
+        </div>
+        <div class="recommends-list">
+          <!-- Item 1 -->
+          <div class="recommend-item">
+            <img class="recommend-thumb" src="https://images.unsplash.com/photo-1595855759920-86582396756a?w=100&fit=crop" alt="Organic Tomatoes">
+            <div class="recommend-info">
+              <div class="recommend-name">Organic Tomatoes</div>
+              <div class="recommend-price">₹25<span> /kg</span></div>
+            </div>
+            <button class="btn-add" onclick="addToCart({id: 1, name: 'Organic Tomatoes', price: 25, unit: 'kg'})" style="padding: 4px 12px; font-size: 0.75rem;">Add</button>
+          </div>
+          <!-- Item 2 -->
+          <div class="recommend-item">
+            <img class="recommend-thumb" src="https://images.unsplash.com/photo-1576045057995-568f588f82fb?w=100&fit=crop" alt="Fresh Spinach">
+            <div class="recommend-info">
+              <div class="recommend-name">Fresh Spinach</div>
+              <div class="recommend-price">₹20<span> /bunch</span></div>
+            </div>
+            <button class="btn-add" onclick="addToCart({id: 4, name: 'Fresh Spinach', price: 20, unit: 'bunch'})" style="padding: 4px 12px; font-size: 0.75rem;">Add</button>
+          </div>
+        </div>
+      </div>
+    </aside>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-about">
+          <a href="index.html" class="logo">
+            <svg viewBox="0 0 24 24">
+              <path d="M12 2C6.48 2 2 6.48 2 12c0 4.42 3.58 8 8 8v-2c-3.31 0-6-2.69-6-6 0-2.97 2.16-5.44 5-5.91V8h2v-.09c2.84.47 5 2.94 5 5.91 0 3.31-2.69 6-6 6v2c4.42 0 8-3.58 8-8 0-5.52-4.48-10-10-10z"/>
+            </svg>
+            <span style="color: white;">Apna Gaon</span>
+          </a>
+          <p>Apna Gaon connects local farmers directly to you. We source daily, ensuring you get the freshest produce while supporting local communities.</p>
+          <div class="app-badges">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" alt="Get it on Google Play">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/3/3c/Download_on_the_App_Store_Badge.svg" alt="Download on the App Store">
+          </div>
+        </div>
+
+        <div class="footer-links">
+          <h4>Explore</h4>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="categories.html">Nearby Farms</a></li>
+            <li><a href="categories.html">Categories</a></li>
+            <li><a href="about.html">About Us</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-links">
+          <h4>Support</h4>
+          <ul>
+            <li><a href="orders.html">My Account</a></li>
+            <li><a href="orders.html">Track Order</a></li>
+            <li><a href="about.html">FAQs</a></li>
+            <li><a href="about.html">Contact Us</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-subscribe">
+          <h4>Subscribe to our newsletter</h4>
+          <p>Get daily updates on fresh harvest schedules and discount codes.</p>
+          <form class="subscribe-form">
+            <input type="email" placeholder="Enter your email" required>
+            <button type="submit">Subscribe</button>
+          </form>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2026 Apna Gaon. Sourced from heart, delivered to doorstep. All rights reserved.</p>
+        <div class="social-icons">
+          <a href="#" class="social-icon">
+            <svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+          </a>
+          <a href="#" class="social-icon">
+            <svg viewBox="0 0 24 24"><path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/></svg>
+          </a>
+          <a href="#" class="social-icon">
+            <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.051.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.668-.072-4.948-.2-4.358-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- DETAIL MODAL -->
+  <div class="modal-overlay" id="order-detail-modal">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 id="modal-order-title">Order Details</h3>
+        <button class="modal-close" onclick="closeDetailModal()">&times;</button>
+      </div>
+      <div id="modal-order-content" style="font-size: 0.9rem; color: var(--text-dark);">
+        <!-- Populated dynamically -->
+      </div>
+    </div>
+  </div>
+
+  <script src="js/main.js"></script>
+  <script>
+    // Simulate user login automatically on dashboard to show Anjali Mehta details
+    document.addEventListener('DOMContentLoaded', () => {
+      if (!isLoggedIn()) {
+        loginUser(); // Sets DEFAULT_USER into session
+      }
+      
+      // Update sidebar details from session just in case
+      const user = getLoggedInUser();
+      document.getElementById('sidebar-name').textContent = user.name;
+      document.getElementById('sidebar-email').textContent = user.email;
+      document.getElementById('sidebar-avatar').src = user.avatar;
+    });
+
+    // Filtering Orders List
+    function filterOrders(status, element) {
+      document.querySelectorAll('.order-tab').forEach(tab => tab.classList.remove('active'));
+      element.classList.add('active');
+
+      const cards = document.querySelectorAll('.order-card');
+      cards.forEach(card => {
+        const cardStatus = card.getAttribute('data-status');
+        if (status === 'all' || cardStatus === status) {
+          card.style.display = 'flex';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+      showToast(`Showing ${status === 'all' ? 'All' : status} orders.`, 'info');
+    }
+
+    // Sort Orders
+    function sortOrders(sortOrder) {
+      const container = document.getElementById('orders-list-container');
+      const cards = Array.from(container.querySelectorAll('.order-card'));
+
+      cards.sort((a, b) => {
+        const dateA = new Date(a.getAttribute('data-date'));
+        const dateB = new Date(b.getAttribute('data-date'));
+        
+        return sortOrder === 'newest' ? dateB - dateA : dateA - dateB;
+      });
+
+      container.innerHTML = '';
+      cards.forEach(card => container.appendChild(card));
+      showToast(`Orders sorted by: ${sortOrder}`, 'info');
+    }
+
+    // Action simulation methods
+    function reorder(orderId) {
+      showToast(`Items from Order #${orderId} added back to your cart!`, 'success');
+      // Increment cart count simulated
+      const cart = getCart();
+      cart.push({ id: 99, name: `Reordered Items (${orderId})`, price: 350, quantity: 1 });
+      saveCart(cart);
+    }
+
+    function trackOrder(orderId) {
+      showToast(`Tracking Order #${orderId}: Courier is 1.2 km away from your location.`, 'success');
+    }
+
+    function showOrderDetails(orderId) {
+      const modal = document.getElementById('order-detail-modal');
+      const content = document.getElementById('modal-order-content');
+      document.getElementById('modal-order-title').textContent = `Details - #${orderId}`;
+      
+      let itemsHTML = '';
+      if (orderId === 'AG123456') {
+        itemsHTML = `
+          <ul style="list-style: none; margin: 15px 0; display: flex; flex-direction: column; gap: 10px;">
+            <li class="flex justify-between"><span>🥦 Organic Cauliflower (1 kg)</span> <strong>₹80</strong></li>
+            <li class="flex justify-between"><span>🍅 Organic Tomatoes (2 kgs)</span> <strong>₹50</strong></li>
+            <li class="flex justify-between"><span>🥛 Fresh Cow Milk (2 Litres)</span> <strong>₹120</strong></li>
+            <li class="flex justify-between"><span>🌾 Premium Basmati Rice (5 kgs)</span> <strong>₹275</strong></li>
+          </ul>
+          <hr style="border-color: var(--border-color); margin: 15px 0;">
+          <div class="flex justify-between" style="font-weight: 700;"><span>Subtotal</span> <span>₹525</span></div>
+          <div class="flex justify-between" style="color: var(--primary-green); font-size: 0.8rem; margin-top: 5px;"><span>Delivery Fee</span> <span>FREE</span></div>
+          <p style="font-size: 0.75rem; color: var(--text-light); margin-top: 15px;">Payment Method: Wallet Balance (₹525)</p>
+        `;
+      } else {
+        itemsHTML = `
+          <ul style="list-style: none; margin: 15px 0; display: flex; flex-direction: column; gap: 10px;">
+            <li class="flex justify-between"><span>🥚 Farm Fresh Eggs (2 dozens)</span> <strong>₹90</strong></li>
+            <li class="flex justify-between"><span>🍯 Pure Honey Jar (500g)</span> <strong>₹220</strong></li>
+          </ul>
+          <hr style="border-color: var(--border-color); margin: 15px 0;">
+          <div class="flex justify-between" style="font-weight: 700;"><span>Subtotal</span> <span>₹310</span></div>
+          <div class="flex justify-between" style="color: var(--primary-green); font-size: 0.8rem; margin-top: 5px;"><span>Delivery Fee</span> <span>FREE</span></div>
+          <p style="font-size: 0.75rem; color: var(--text-light); margin-top: 15px;">Payment Method: Cash on Delivery</p>
+        `;
+      }
+
+      content.innerHTML = itemsHTML;
+      modal.classList.add('active');
+    }
+
+    function closeDetailModal() {
+      const modal = document.getElementById('order-detail-modal');
+      modal.classList.remove('active');
+    }
+  </script>
+</body>
+</html>

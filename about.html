@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About Us - Apna Gaon</title>
+  <meta name="description" content="Learn about Apna Gaon's mission, vision, story, and the local farmers who bring fresh, chemical-free food directly to your doorstep.">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    /* --- BREADCRUMBS --- */
+    .breadcrumbs {
+      padding: 24px 0 12px 0;
+      font-size: 0.85rem;
+      color: var(--text-light);
+    }
+    .breadcrumbs a {
+      color: var(--text-muted);
+    }
+    .breadcrumbs a:hover {
+      color: var(--primary-green);
+    }
+
+    /* --- ABOUT HERO --- */
+    .about-hero-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.1fr;
+      gap: 40px;
+      align-items: center;
+      margin-bottom: 50px;
+    }
+    .about-tag {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--primary-green);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+    .about-hero-content h1 {
+      font-size: 2.8rem;
+      line-height: 1.15;
+      color: #112d12;
+      margin-bottom: 20px;
+    }
+    .about-hero-content p {
+      font-size: 1.05rem;
+      color: var(--text-muted);
+      margin-bottom: 30px;
+    }
+    .about-features {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .about-feat-item {
+      display: flex;
+      gap: 16px;
+    }
+    .about-feat-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background-color: var(--bg-sage-light);
+      color: var(--primary-green);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-size: 1.2rem;
+    }
+    .about-feat-info h4 {
+      font-size: 0.95rem;
+      margin-bottom: 4px;
+    }
+    .about-feat-info p {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 0;
+    }
+    .about-hero-image {
+      height: 380px;
+      border-radius: var(--border-radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-lg);
+    }
+    .about-hero-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* --- MVS CARDS (Mission, Vision, Story) --- */
+    .mvs-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-bottom: 64px;
+    }
+    .mvs-card {
+      padding: 30px;
+      border-radius: var(--border-radius-lg);
+      border: 1px solid var(--border-color);
+      transition: var(--transition-smooth);
+      position: relative;
+    }
+    .mvs-card:hover {
+      box-shadow: var(--shadow-md);
+      transform: translateY(-4px);
+    }
+    .mvs-card-1 { background-color: var(--bg-sage); }
+    .mvs-card-2 { background-color: #fafcf9; }
+    .mvs-card-3 { background-color: #f1f8e9; }
+    .mvs-icon-circle {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background-color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--primary-green);
+      margin-bottom: 20px;
+      box-shadow: var(--shadow-sm);
+      font-size: 1.3rem;
+    }
+    .mvs-card h3 {
+      font-size: 1.25rem;
+      margin-bottom: 12px;
+    }
+    .mvs-card p {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    /* --- STATS SECTION --- */
+    .stats-diff-section {
+      background-color: var(--bg-sage);
+      border-radius: var(--border-radius-lg);
+      padding: 48px;
+      margin-bottom: 64px;
+      text-align: center;
+    }
+    .stats-diff-header {
+      margin-bottom: 36px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .stats-diff-header h2 {
+      font-size: 2rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .stats-diff-grid {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 20px;
+    }
+    .stat-diff-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .stat-diff-icon {
+      font-size: 1.8rem;
+      margin-bottom: 10px;
+    }
+    .stat-diff-number {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: var(--primary-green);
+    }
+    .stat-diff-label {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-top: 4px;
+      font-weight: 500;
+    }
+
+    /* --- FARMERS SECTION --- */
+    .farmers-header {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: flex-end;
+      gap: 40px;
+      margin-bottom: 40px;
+    }
+    .farmers-header h2 {
+      font-size: 2rem;
+      margin-bottom: 12px;
+    }
+    .farmers-header p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+    }
+    .farmers-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 24px;
+      margin-bottom: 64px;
+    }
+    .farmer-card {
+      background-color: white;
+      border-radius: var(--border-radius-md);
+      overflow: hidden;
+      border: 1px solid var(--border-color);
+      transition: var(--transition-smooth);
+    }
+    .farmer-card:hover {
+      box-shadow: var(--shadow-md);
+      transform: translateY(-4px);
+    }
+    .farmer-img-box {
+      height: 220px;
+      position: relative;
+    }
+    .farmer-img-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .farmer-info-box {
+      padding: 16px;
+    }
+    .farmer-name {
+      font-size: 1.05rem;
+      margin-bottom: 4px;
+    }
+    .farmer-loc {
+      font-size: 0.8rem;
+      color: var(--text-light);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      margin-bottom: 12px;
+    }
+    .farmer-badge {
+      display: inline-block;
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: var(--primary-green);
+      background-color: var(--bg-sage-light);
+      padding: 4px 8px;
+      border-radius: 4px;
+      text-transform: uppercase;
+    }
+
+    /* --- WHY CHOOSE US --- */
+    .choose-us-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 40px;
+      align-items: center;
+      margin-bottom: 64px;
+    }
+    .choose-us-content h2 {
+      font-size: 2rem;
+      margin-bottom: 30px;
+    }
+    .choose-list {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+    .choose-item {
+      display: flex;
+      gap: 16px;
+    }
+    .choose-icon-circle {
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      background-color: white;
+      color: var(--primary-green);
+      border: 1px solid var(--border-color);
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      flex-shrink: 0;
+    }
+    .choose-info h4 {
+      font-size: 0.95rem;
+      margin-bottom: 4px;
+    }
+    .choose-info p {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+    .choose-image-box {
+      height: 420px;
+      border-radius: var(--border-radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-lg);
+    }
+    .choose-image-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* --- BE A PART BANNER --- */
+    .cta-banner {
+      background-color: var(--primary-green);
+      color: white;
+      border-radius: var(--border-radius-lg);
+      padding: 50px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 64px;
+      flex-wrap: wrap;
+      gap: 30px;
+    }
+    .cta-content h3 {
+      font-size: 1.8rem;
+      color: white;
+      margin-bottom: 8px;
+    }
+    .cta-content p {
+      color: #c8e6c9;
+    }
+    .btn-cta {
+      background-color: var(--accent-gold);
+      color: var(--text-dark);
+      padding: 12px 30px;
+      border-radius: 30px;
+      font-weight: 700;
+    }
+    .btn-cta:hover {
+      background-color: var(--accent-gold-hover);
+      transform: translateY(-2px);
+    }
+
+    @media (max-width: 992px) {
+      .about-hero-grid, .choose-us-grid {
+        grid-template-columns: 1fr;
+      }
+      .about-hero-image, .choose-image-box {
+        height: 300px;
+      }
+      .mvs-grid {
+        grid-template-columns: 1fr;
+      }
+      .stats-diff-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+      .farmers-header {
+        grid-template-columns: 1fr;
+        gap: 15px;
+      }
+    }
+    @media (max-width: 576px) {
+      .stats-diff-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <div class="container header-container">
+      <a href="index.html" class="logo">
+        <svg viewBox="0 0 24 24">
+          <path d="M12 2C6.48 2 2 6.48 2 12c0 4.42 3.58 8 8 8v-2c-3.31 0-6-2.69-6-6 0-2.97 2.16-5.44 5-5.91V8h2v-.09c2.84.47 5 2.94 5 5.91 0 3.31-2.69 6-6 6v2c4.42 0 8-3.58 8-8 0-5.52-4.48-10-10-10z"/>
+          <path d="M12 6c-3.31 0-6 2.69-6 6 0 1.66.67 3.16 1.76 4.24l1.42-1.42C8.43 14.07 8 13.09 8 12c0-2.21 1.79-4 4-4s4 1.79 4 4c0 1.09-.43 2.07-1.18 2.83l1.42 1.42C17.33 15.16 18 13.66 18 12c0-3.31-2.69-6-6-6z"/>
+        </svg>
+        <span>Apna Gaon</span>
+      </a>
+
+      <nav>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="categories.html">Farms</a></li>
+          <li><a href="categories.html">Categories</a></li>
+          <li><a href="categories.html">Offers</a></li>
+          <li><a href="orders.html">Orders</a></li>
+          <li><a href="about.html" class="active">About Us</a></li>
+        </ul>
+      </nav>
+
+      <div class="header-controls">
+        <div class="location-selector">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+            <circle cx="12" cy="10" r="3"></circle>
+          </svg>
+          <span class="loc-text">Jaipur, Rajasthan</span>
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <polyline points="6 9 12 15 18 9"></polyline>
+          </svg>
+        </div>
+
+        <div class="search-bar-container">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+          <input type="text" placeholder="Search fresh vegetables, milk...">
+        </div>
+
+        <button class="cart-btn" onclick="window.location.href='orders.html'">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <circle cx="9" cy="21" r="1"></circle>
+            <circle cx="20" cy="21" r="1"></circle>
+            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+          </svg>
+          <span class="cart-count">3</span>
+        </button>
+
+        <div id="header-auth-container">
+          <a href="login.html" class="auth-btn">Login / Sign Up</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- BREADCRUMBS -->
+  <div class="container breadcrumbs">
+    <a href="index.html">Home</a> &gt; <span>About Us</span>
+  </div>
+
+  <!-- ABOUT HERO SECTION -->
+  <section class="container section-padding" style="padding-top: 10px;">
+    <div class="about-hero-grid">
+      <div class="about-hero-content">
+        <div class="about-tag">About Apna Gaon</div>
+        <h1>From Our Fields <br>To Your Homes</h1>
+        <p>Apna Gaon is more than just a marketplace. We are a bridge between local farmers and families who value fresh, healthy, and natural food.</p>
+        
+        <div class="about-features">
+          <!-- Item 1 -->
+          <div class="about-feat-item">
+            <div class="about-feat-icon">🌾</div>
+            <div class="about-feat-info">
+              <h4>Direct from Farmers</h4>
+              <p>No middlemen, fair prices directly to the growers.</p>
+            </div>
+          </div>
+          <!-- Item 2 -->
+          <div class="about-feat-item">
+            <div class="about-feat-icon">🥬</div>
+            <div class="about-feat-info">
+              <h4>Fresh & Natural</h4>
+              <p>Handpicked, chemical-free and 100% natural crop produce.</p>
+            </div>
+          </div>
+          <!-- Item 3 -->
+          <div class="about-feat-item">
+            <div class="about-feat-icon">👥</div>
+            <div class="about-feat-info">
+              <h4>Stronger Together</h4>
+              <p>Empowering farming families and building sustainable communities.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="about-hero-image">
+        <img src="https://images.unsplash.com/photo-1589923188900-85dae440342b?w=800&fit=crop" alt="Indian farmers shaking hands in green field">
+      </div>
+    </div>
+  </section>
+
+  <!-- MISSION, VISION, STORY -->
+  <section class="container">
+    <div class="mvs-grid">
+      <div class="mvs-card mvs-card-1">
+        <div class="mvs-icon-circle">🎯</div>
+        <h3>Our Mission</h3>
+        <p>To make fresh, healthy, and natural food accessible to every home while ensuring farmers get the respect, recognition, and fair income they deserve.</p>
+      </div>
+
+      <div class="mvs-card mvs-card-2">
+        <div class="mvs-icon-circle">👁️</div>
+        <h3>Our Vision</h3>
+        <p>A future where every community thrives with healthy living, sustainable organic farming, and a stronger transparent connection between growers and consumers.</p>
+      </div>
+
+      <div class="mvs-card mvs-card-3">
+        <div class="mvs-icon-circle">📖</div>
+        <h3>Our Story</h3>
+        <p>Apna Gaon was born from a simple idea – to bring local farms closer to urban households. What started as a small local farmer collective is now a growing green movement.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS DIFFERENCE SECTION -->
+  <section class="container stats-diff-section">
+    <div class="stats-diff-header">
+      <h2>🥬 Making a Difference Every Day 🥬</h2>
+      <p style="color: var(--text-muted); font-size: 0.95rem; max-width: 600px; margin-top: 8px;">Our collective effort helps farmers secure higher revenues and provides consumers with nutrient-dense fresh food.</p>
+    </div>
+    
+    <div class="stats-diff-grid">
+      <div class="stat-diff-item">
+        <div class="stat-diff-icon">👨‍🌾</div>
+        <div class="stat-diff-number">500+</div>
+        <div class="stat-diff-label">Local Farmers</div>
+      </div>
+      <div class="stat-diff-item">
+        <div class="stat-diff-icon">🤝</div>
+        <div class="stat-diff-number">20K+</div>
+        <div class="stat-diff-label">Happy Customers</div>
+      </div>
+      <div class="stat-diff-item">
+        <div class="stat-diff-icon">🚚</div>
+        <div class="stat-diff-number">10K+</div>
+        <div class="stat-diff-label">Orders Delivered</div>
+      </div>
+      <div class="stat-diff-item">
+        <div class="stat-diff-icon">🍏</div>
+        <div class="stat-diff-number">150+</div>
+        <div class="stat-diff-label">Tons of Produce Sold</div>
+      </div>
+      <div class="stat-diff-item">
+        <div class="stat-diff-icon">📍</div>
+        <div class="stat-diff-number">50+</div>
+        <div class="stat-diff-label">Cities Served</div>
+      </div>
+      <div class="stat-diff-item">
+        <div class="stat-diff-icon">⭐</div>
+        <div class="stat-diff-number">4.8/5</div>
+        <div class="stat-diff-label">Average Rating</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FARMERS PROFILES -->
+  <section class="container">
+    <div class="farmers-header">
+      <div>
+        <p style="color: var(--primary-green); font-weight: 700; font-size: 0.8rem; text-transform: uppercase; margin-bottom: 4px;">Meet the growers</p>
+        <h2>Our Farmers, Our Strength</h2>
+        <p>Behind every fresh product is a farmer who works with passion and care. We are proud to support the incredible people who feed our communities.</p>
+      </div>
+      <div style="text-align: right;">
+        <button class="btn btn-primary" onclick="window.location.href='categories.html'">Meet Our Farmers &rarr;</button>
+      </div>
+    </div>
+
+    <div class="farmers-grid">
+      <!-- Farmer 1 -->
+      <div class="farmer-card">
+        <div class="farmer-img-box">
+          <img src="https://images.unsplash.com/photo-1595974482597-4b8da8879bc5?w=400&fit=crop" alt="Ramesh Sharma">
+        </div>
+        <div class="farmer-info-box">
+          <h3 class="farmer-name">Ramesh Sharma</h3>
+          <div class="farmer-loc">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+              <circle cx="12" cy="10" r="3"></circle>
+            </svg>
+            <span>Jaipur, Rajasthan</span>
+          </div>
+          <span class="farmer-badge">Vegetables</span>
+        </div>
+      </div>
+
+      <!-- Farmer 2 -->
+      <div class="farmer-card">
+        <div class="farmer-img-box">
+          <img src="https://images.unsplash.com/photo-1590779037667-27115ae0c6a8?w=400&fit=crop" alt="Kiran Devi">
+        </div>
+        <div class="farmer-info-box">
+          <h3 class="farmer-name">Kiran Devi</h3>
+          <div class="farmer-loc">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+              <circle cx="12" cy="10" r="3"></circle>
+            </svg>
+            <span>Alwar, Rajasthan</span>
+          </div>
+          <span class="farmer-badge">Fruits</span>
+        </div>
+      </div>
+
+      <!-- Farmer 3 -->
+      <div class="farmer-card">
+        <div class="farmer-img-box">
+          <img src="https://images.unsplash.com/photo-1546445317-29f4545e6d49?w=400&fit=crop" alt="Mahendra Singh">
+        </div>
+        <div class="farmer-info-box">
+          <h3 class="farmer-name">Mahendra Singh</h3>
+          <div class="farmer-loc">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+              <circle cx="12" cy="10" r="3"></circle>
+            </svg>
+            <span>Sikar, Rajasthan</span>
+          </div>
+          <span class="farmer-badge">Dairy</span>
+        </div>
+      </div>
+
+      <!-- Farmer 4 -->
+      <div class="farmer-card">
+        <div class="farmer-img-box">
+          <img src="https://images.unsplash.com/photo-1592417817098-8f3d6eb19675?w=400&fit=crop" alt="Suresh Yadav">
+        </div>
+        <div class="farmer-info-box">
+          <h3 class="farmer-name">Suresh Yadav</h3>
+          <div class="farmer-loc">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+              <circle cx="12" cy="10" r="3"></circle>
+            </svg>
+            <span>Bharatpur, Rajasthan</span>
+          </div>
+          <span class="farmer-badge">Organic Produce</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY CHOOSE APNA GAON -->
+  <section class="container choose-us-grid">
+    <div class="choose-us-content">
+      <h2>Why Choose Apna Gaon?</h2>
+      
+      <div class="choose-list">
+        <!-- Item 1 -->
+        <div class="choose-item">
+          <div class="choose-icon-circle">🛡️</div>
+          <div class="choose-info">
+            <h4>Trust & Transparency</h4>
+            <p>We ensure strict quality inspection, organic certificates, and total transparency from crop seeding to delivery packaging.</p>
+          </div>
+        </div>
+        
+        <!-- Item 2 -->
+        <div class="choose-item">
+          <div class="choose-icon-circle">🌱</div>
+          <div class="choose-info">
+            <h4>Sustainable Farming</h4>
+            <p>We promote biodiversity, zero chemical fertilizers, and soil conservation practices among our farmer networks.</p>
+          </div>
+        </div>
+        
+        <!-- Item 3 -->
+        <div class="choose-item">
+          <div class="choose-icon-circle">🤝</div>
+          <div class="choose-info">
+            <h4>Community First</h4>
+            <p>Every transaction helps improve rural livelihoods directly. We distribute 80%+ of consumer prices straight to farmers.</p>
+          </div>
+        </div>
+
+        <!-- Item 4 -->
+        <div class="choose-item">
+          <div class="choose-icon-circle">🚚</div>
+          <div class="choose-info">
+            <h4>Fast & Reliable Delivery</h4>
+            <p>Our supply chain delivers freshly harvested crops to your home within 12 hours of being picked.</p>
+          </div>
+        </div>
+
+        <!-- Item 5 -->
+        <div class="choose-item">
+          <div class="choose-icon-circle">💳</div>
+          <div class="choose-info">
+            <h4>Secure Payments</h4>
+            <p>All online financial transactions are safe, encrypted, and support instant refund processes if quality is not met.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="choose-image-box">
+      <img src="https://images.unsplash.com/photo-1542838132-92c53300491e?w=600&fit=crop" alt="Fresh organic vegetables basket">
+    </div>
+  </section>
+
+  <!-- BE A PART OF OUR JOURNEY -->
+  <div class="container">
+    <div class="cta-banner">
+      <div class="cta-content">
+        <h3>Be a Part of Our Journey 🌱</h3>
+        <p>Together, let's build a healthier, happier, and more sustainable world.</p>
+      </div>
+      <a href="login.html" class="btn btn-cta">Join Apna Gaon Today</a>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-about">
+          <a href="index.html" class="logo">
+            <svg viewBox="0 0 24 24">
+              <path d="M12 2C6.48 2 2 6.48 2 12c0 4.42 3.58 8 8 8v-2c-3.31 0-6-2.69-6-6 0-2.97 2.16-5.44 5-5.91V8h2v-.09c2.84.47 5 2.94 5 5.91 0 3.31-2.69 6-6 6v2c4.42 0 8-3.58 8-8 0-5.52-4.48-10-10-10z"/>
+            </svg>
+            <span style="color: white;">Apna Gaon</span>
+          </a>
+          <p>Apna Gaon connects local farmers directly to you. We source daily, ensuring you get the freshest produce while supporting local communities.</p>
+          <div class="app-badges">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" alt="Get it on Google Play">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/3/3c/Download_on_the_App_Store_Badge.svg" alt="Download on the App Store">
+          </div>
+        </div>
+
+        <div class="footer-links">
+          <h4>Explore</h4>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="categories.html">Nearby Farms</a></li>
+            <li><a href="categories.html">Categories</a></li>
+            <li><a href="about.html">About Us</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-links">
+          <h4>Support</h4>
+          <ul>
+            <li><a href="orders.html">My Account</a></li>
+            <li><a href="orders.html">Track Order</a></li>
+            <li><a href="about.html">FAQs</a></li>
+            <li><a href="about.html">Contact Us</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-subscribe">
+          <h4>Subscribe to our newsletter</h4>
+          <p>Get daily updates on fresh harvest schedules and discount codes.</p>
+          <form class="subscribe-form">
+            <input type="email" placeholder="Enter your email" required>
+            <button type="submit">Subscribe</button>
+          </form>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2026 Apna Gaon. Sourced from heart, delivered to doorstep. All rights reserved.</p>
+        <div class="social-icons">
+          <a href="#" class="social-icon">
+            <svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+          </a>
+          <a href="#" class="social-icon">
+            <svg viewBox="0 0 24 24"><path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/></svg>
+          </a>
+          <a href="#" class="social-icon">
+            <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.051.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.668-.072-4.948-.2-4.358-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
