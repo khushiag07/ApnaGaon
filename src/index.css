@@ -1,0 +1,35 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * { -webkit-tap-highlight-color: transparent; }
+  html { scroll-behavior: smooth; }
+  body {
+    @apply bg-surface text-ink font-sans antialiased;
+    font-feature-settings: "cv11", "ss01";
+  }
+  html.dark body {
+    @apply bg-surfaceDark text-white;
+  }
+  :focus-visible {
+    outline: 2px solid #2E7D32;
+    outline-offset: 2px;
+    border-radius: 8px;
+  }
+  ::-webkit-scrollbar { width: 6px; height: 6px; }
+  ::-webkit-scrollbar-thumb { background: rgba(46,125,50,0.25); border-radius: 999px; }
+}
+
+@layer utilities {
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+  .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+  .skeleton {
+    background: linear-gradient(90deg, #EDF2EC 0px, #F8FAF7 40px, #EDF2EC 80px);
+    background-size: 600px;
+    @apply animate-shimmer;
+  }
+  .safe-bottom { padding-bottom: env(safe-area-inset-bottom); }
+}
