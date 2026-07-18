@@ -40,12 +40,12 @@ export default function Search() {
         </button>
         <div className="flex-1 flex items-center gap-2.5 bg-white dark:bg-cardDark rounded-pill px-4 py-3.5 shadow-soft">
           <input
-            autoFocus
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-            placeholder="Search fresh produce, farmers…"
-            className="flex-1 bg-transparent outline-none text-sm"
-          />
+  autoFocus
+  value={query}
+  onChange={(e) => setQuery(e.target.value)}
+  placeholder="Search fresh vegetables, milk, fruits..."
+  className="flex-1 bg-transparent outline-none text-sm"
+/>
           {query && (
             <button onClick={() => setQuery("")} aria-label="Clear"><X size={16} className="text-ink/40" /></button>
           )}

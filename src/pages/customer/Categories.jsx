@@ -21,9 +21,16 @@ export default function Categories() {
               onClick={() => navigate(`/category/${c.id}`)}
               className="bg-white dark:bg-cardDark rounded-card shadow-soft p-5 flex flex-col items-center gap-2 text-center"
             >
-              <div className="w-16 h-16 rounded-2xl flex items-center justify-center text-3xl" style={{ backgroundColor: `${c.color}14` }}>
-                {c.emoji}
-              </div>
+              <div
+  className="w-16 h-16 rounded-2xl flex items-center justify-center"
+  style={{ backgroundColor: `${c.color}14` }}
+>
+  <img
+    src={c.image}
+    alt={c.name}
+    className="w-12 h-12 object-contain"
+  />
+</div>
               <span className="font-semibold text-sm mt-1">{c.name}</span>
               <span className="text-xs text-ink/45 dark:text-white/45">{count} items</span>
             </motion.button>

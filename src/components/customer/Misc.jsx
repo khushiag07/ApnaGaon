@@ -23,31 +23,36 @@ export function CategoryCard({ category }) {
   );
 }
 
-export function SearchBar({ onClick, placeholder = "Search fresh produce, farmers…", readOnly = true, value, onChange }) {
+
+export function SearchBar({
+  placeholder = "Search fresh vegetables, milk, fruits...",
+}) {
+  const navigate = useNavigate();
+
   return (
     <button
-      onClick={onClick}
+      onClick={() => navigate("/search")}
       className={cn(
-        "w-full flex items-center gap-2.5 bg-white dark:bg-cardDark rounded-pill px-4 py-3.5 shadow-soft text-left",
-        "border border-black/[0.03] dark:border-white/5"
+        "w-full flex items-center gap-3 bg-white dark:bg-cardDark rounded-full px-5 py-3.5 shadow-soft",
+        "border border-black/[0.05] dark:border-white/10"
       )}
     >
-      <Search size={18} className="text-ink/40 dark:text-white/40 flex-shrink-0" />
-      {readOnly ? (
-        <span className="text-sm text-ink/40 dark:text-white/40 flex-1">{placeholder}</span>
-      ) : (
-        <input
-          value={value}
-          onChange={onChange}
-          placeholder={placeholder}
-          className="flex-1 bg-transparent text-sm outline-none placeholder:text-ink/40 dark:placeholder:text-white/40"
-        />
-      )}
-      <Mic size={18} className="text-primary flex-shrink-0" />
+      <Search
+        size={20}
+        className="text-gray-400 dark:text-white/50 flex-shrink-0"
+      />
+
+      <span className="flex-1 text-left text-sm text-gray-400 dark:text-white/40">
+        {placeholder}
+      </span>
+
+      <Mic
+        size={20}
+        className="text-green-700 dark:text-green-400 flex-shrink-0"
+      />
     </button>
   );
 }
-
 export function SectionHeader({ title, subtitle, actionLabel = "See all", onAction }) {
   return (
     <div className="flex items-end justify-between mb-3.5">

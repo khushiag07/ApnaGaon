@@ -2,16 +2,68 @@
 // In production this would come from services/api.js instead.
 
 export const categories = [
-  { id: "veg", name: "Vegetables", emoji: "🥦", color: "#2E7D32" },
-  { id: "fruit", name: "Fruits", emoji: "🍎", color: "#E5A800" },
-  { id: "dairy", name: "Dairy", emoji: "🥛", color: "#4CAF50" },
-  { id: "grains", name: "Grains", emoji: "🌾", color: "#B5622C" },
-  { id: "herbs", name: "Herbs", emoji: "🌿", color: "#2E7D32" },
-  { id: "honey", name: "Honey", emoji: "🍯", color: "#E5A800" },
-  { id: "spices", name: "Spices", emoji: "🌶️", color: "#B5622C" },
-  { id: "flowers", name: "Flowers", emoji: "🌸", color: "#4CAF50" },
+  {
+    id: "all",
+    name: "All Categories",
+    image: "/categories/all.png",
+    active: true,
+  },
+  {
+    id: "veg",
+    name: "Vegetables",
+    image: "/categories/vegetable.png",
+  },
+  {
+    id: "fruit",
+    name: "Fruits",
+    image: "/categories/fruits.png",
+  },
+  {
+    id: "dairy",
+    name: "Milk & Dairy",
+    image: "/categories/milk.png",
+  },
+  {
+    id: "eggs",
+    name: "Eggs",
+    image: "/categories/eggs.png",
+  },
+  {
+    id: "honey",
+    name: "Honey",
+    image: "/categories/honey.png",
+  },
+  {
+    id: "grains",
+    name: "Grains & Pulses",
+    image: "/categories/grains.png",
+  },
+  {
+    id: "dryfruits",
+    name: "Dry Fruits",
+    image: "/categories/dryfruits.png",
+  },
+  {
+    id: "flowers",
+    name: "Flowers",
+    image: "/categories/flowers.png",
+  },
+  {
+    id: "herbs",
+    name: "Herbs & Leaves",
+    image: "/categories/herbs.png",
+  },
+  {
+    id: "homemade",
+    name: "Homemade",
+    image: "/categories/homemade.png",
+  },
+  {
+    id: "beverages",
+    name: "Beverages",
+    image: "/categories/beverages.png",
+  },
 ];
-
 export const farmers = [
   {
     id: "f1",

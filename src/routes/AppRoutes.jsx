@@ -1,7 +1,6 @@
 import { Routes, Route } from "react-router-dom";
 import CustomerLayout from "../layouts/CustomerLayout";
 import Splash from "../pages/customer/Splash";
-import Login from "../pages/customer/Login";
 import OTPVerification from "../pages/customer/OTPVerification";
 import Home from "../pages/customer/Home";
 import Search from "../pages/customer/Search";
@@ -26,7 +25,6 @@ export default function AppRoutes() {
     <Routes>
       {/* Auth flow — no shell chrome */}
       <Route path="/splash" element={<Splash />} />
-      <Route path="/login" element={<Login />} />
       <Route path="/otp" element={<OTPVerification />} />
 
       {/* Main customer app shell */}

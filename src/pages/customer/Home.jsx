@@ -1,16 +1,19 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { MapPin, ChevronDown, Bell, Zap } from "lucide-react";
-import { SearchBar, SectionHeader, CategoryCard } from "../../components/customer/Misc";
+import { MapPin, ChevronDown, Bell, Zap ,User} from "lucide-react";
+import { SectionHeader, CategoryCard } from "../../components/customer/Misc";
 import ProductCard from "../../components/customer/ProductCard";
 import FarmerCard from "../../components/customer/FarmerCard";
 import { categories, products, farmers, banners } from "../../data/mockData";
+
 
 export default function Home() {
   const navigate = useNavigate();
   const [bannerIndex, setBannerIndex] = useState(0);
   const banner = banners[bannerIndex];
+  const [showAuth, setShowAuth] = useState(false);
+  const [isLogin, setIsLogin] = useState(true);
 
   const freshPicks = products.filter((p) => p.tag === "Today's Fresh Pick");
   const flashDeals = products.filter((p) => p.tag === "Flash Deal");
@@ -20,23 +23,45 @@ export default function Home() {
 
   return (
     <div className="px-4 md:px-8 pt-4 md:pt-6 max-w-7xl mx-auto">
-      {/* Mobile-only top bar */}
-      <div className="flex items-center justify-between mb-4 md:hidden">
-        <button className="flex items-center gap-1 text-sm font-semibold">
-          <MapPin size={16} className="text-primary" />
-          Thiruvanmiyur, Chennai
-          <ChevronDown size={14} className="text-ink/40" />
-        </button>
-        <button onClick={() => navigate("/notifications")} className="w-9 h-9 rounded-full bg-white dark:bg-cardDark shadow-soft flex items-center justify-center" aria-label="Notifications">
-          <Bell size={16} />
-        </button>
-      </div>
 
-      <div className="mb-5 md:hidden">
-        <SearchBar onClick={() => navigate("/search")} />
-      </div>
+<div className="flex md:hidden items-center justify-between mb-4">
 
-      {/* Hero banner */}
+  {/* Location */}
+  <button className="flex items-center gap-1 text-sm font-semibold">
+    <MapPin size={16} className="text-primary" />
+    Thiruvanmiyur, Chennai
+    <ChevronDown size={14} />
+  </button>
+
+  {/* Right */}
+  <div className="flex items-center gap-2">
+
+    {/* Profile */}
+    <button
+      onClick={() => {
+        setIsLogin(true);
+        setShowAuth(true);
+      }}
+      className="w-10 h-10 rounded-full bg-green-700 text-white flex items-center justify-center"
+    >
+      <User size={18} />
+    </button>
+
+    {/* Notification */}
+    <button
+      onClick={() => navigate("/notifications")}
+      className="w-10 h-10 rounded-full bg-white shadow flex items-center justify-center"
+    >
+      <Bell size={16} />
+    </button>
+
+  </div>
+
+</div>
+
+
+
+      {/* Hero banner */} 
       <motion.div
         initial={{ opacity: 0, y: 12 }}
         animate={{ opacity: 1, y: 0 }}
@@ -147,6 +172,102 @@ export default function Home() {
           ))}
         </div>
       </section>
+      {showAuth && (
+  <div
+  className="fixed inset-0 z-50 flex items-center justify-center bg-black/50"
+  onClick={() => setShowAuth(false)}
+>
+
+    <div className="w-[95%] max-w-5xl overflow-hidden rounded-3xl bg-white shadow-2xl grid md:grid-cols-2">
+
+      {/* Left */}
+
+      <div className="p-10">
+
+        <button
+          className="float-right text-2xl"
+          onClick={() => setShowAuth(false)}
+        >
+          ✕
+        </button>
+
+        <h1 className="mt-8 text-4xl font-bold">
+          {isLogin ? "Welcome Back" : "Create Account"}
+        </h1>
+
+        <p className="mt-2 mb-8 text-gray-500">
+          {isLogin
+            ? "Login to continue shopping."
+            : "Join Apna Gaon today."}
+        </p>
+
+        {!isLogin && (
+          <>
+            <input
+              placeholder="Full Name"
+              className="mb-4 w-full rounded-xl border p-4"
+            />
+          </>
+        )}
+
+        <input
+          placeholder="Email"
+          className="mb-4 w-full rounded-xl border p-4"
+        />
+
+        <input
+          type="password"
+          placeholder="Password"
+          className="mb-4 w-full rounded-xl border p-4"
+        />
+
+        {!isLogin && (
+          <input
+            type="password"
+            placeholder="Confirm Password"
+            className="mb-4 w-full rounded-xl border p-4"
+          />
+        )}
+
+        <button className="w-full rounded-xl bg-green-700 py-4 font-semibold text-white">
+          {isLogin ? "Login" : "Create Account"}
+        </button>
+
+        <p className="mt-6 text-center">
+          {isLogin ? "Don't have an account?" : "Already have an account?"}
+
+          <button
+            onClick={() => setIsLogin(!isLogin)}
+            className="ml-2 text-green-700 font-semibold"
+          >
+            {isLogin ? "Sign Up" : "Login"}
+          </button>
+        </p>
+
+      </div>
+
+      {/* Right */}
+
+      <div className="hidden md:block">
+
+        <img
+          src={
+            isLogin
+              ? "/login.png"
+              : "/signup.png"
+          }
+          alt=""
+          className="h-full w-full object-cover"
+        />
+
+      </div>
+
     </div>
+
+  </div>
+)}
+
+    </div>
+    
   );
 }
